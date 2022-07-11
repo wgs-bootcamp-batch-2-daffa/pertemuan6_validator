@@ -1,16 +1,5 @@
 const fs = require('fs')
 // 
-// ASK QUESTION FUNCTION
-// 
-const askQuestion = (ask) => {
-    return new Promise((resolve) => {
-        rl.question(ask, (input) => {
-            console.log('Next input ==>');
-            resolve(input)
-        })
-    })
-}
-// 
 // DATA CONTACT VALIDATOR FUNCTION
 // 
 const dataContactsValidator = () => {
@@ -33,28 +22,32 @@ const insertDataContacts = (Name, Email, Phone) => {
     // VALIDATOR
     dataContactsValidator()
 
-    // INSERT DATA
+    // INITIAL DATA
     const contact = { Name, Email, Phone }
     const file = fs.readFileSync('./data/contacts.json', 'utf8')
     const contacts = JSON.parse(file)
 
+    // VALIDATOR DUPLICATE NAME
     let checkName = false
     contacts.forEach(e => {
         if (e.Name == Name) {
-            return checkName = true
+            checkName = true
         }
     });
-    if (checkName == true) {
-        console.log('Nama sudah ada');
-    } else {
-        contacts.push(contact)
-        fs.writeFileSync('./data/contacts.json', JSON.stringify(contacts))
-
-        console.log('thank you');
+    if (checkName) {
+        console.log('<=== Nama sudah ada ===>');
+        return true
     }
+
+    // INSERT DATA
+    contacts.push(contact)
+    fs.writeFileSync('./data/contacts.json', JSON.stringify(contacts))
+
+    console.log('<=== Thank you ===>');
+
 }
+
 module.exports = {
-    askQuestion,
     insertDataContacts
 }
 
