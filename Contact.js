@@ -63,12 +63,13 @@ const insertDataContacts = (Name, Email, Phone) => {
     contacts.push(contact)
     fs.writeFileSync('./data/contacts.json', JSON.stringify(contacts))
 
+    // SUCCESS OUTPUT
     const data = [{
         'Name': Name,
         'Email': Email,
         'Phone': Phone
-    }]
-
+    }
+    ]
     data.forEach(e => {
         console.log(e);
     });
