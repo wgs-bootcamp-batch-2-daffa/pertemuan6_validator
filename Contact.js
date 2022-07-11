@@ -21,10 +21,12 @@ const folderValidator = () => {
 // 
 const validation = (email, phone) => {
     if (!validator.isEmail(email)) {
+        process.stdout.write('\033c');
         console.log(`<=== Email isn't valid ===>`);
         return false
     }
     if (!validator.isMobilePhone(phone, 'id-ID')) {
+        process.stdout.write('\033c');
         console.log(`<=== Mobile phone isn't valid ===>`);
         return false
     }
@@ -50,6 +52,7 @@ const insertDataContacts = (Name, Email, Phone) => {
         }
     });
     if (checkName) {
+        process.stdout.write('\033c');
         console.log('<=== Name already exists ===>');
         return false
     }
