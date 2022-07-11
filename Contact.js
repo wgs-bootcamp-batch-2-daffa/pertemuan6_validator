@@ -1,8 +1,9 @@
 const fs = require('fs')
+const validator = require('validator')
 // 
 // DATA CONTACT VALIDATOR FUNCTION
 // 
-const dataContactsValidator = () => {
+const folderValidator = () => {
     // VALIDATION FOLDER
     const dirPath = './data'
     if (!fs.existsSync(dirPath)) {
@@ -16,11 +17,25 @@ const dataContactsValidator = () => {
     }
 }
 // 
+// VALIDATOR INPUT
+// 
+const validation = (email, phone) => {
+    if (!validator.isEmail(email)) {
+        console.log(`<=== Email isn't valid ===>`);
+        return false
+    }
+    if (!validator.isMobilePhone(phone, 'id-ID')) {
+        console.log(`<=== Mobile phone isn't valid ===>`);
+        return false
+    }
+    return true
+}
+// 
 // INSERT DATA CONTACTS
 // 
 const insertDataContacts = (Name, Email, Phone) => {
-    // VALIDATOR
-    dataContactsValidator()
+    // VALIDATOR FOLDER JSON
+    folderValidator()
 
     // INITIAL DATA
     const contact = { Name, Email, Phone }
@@ -31,19 +46,33 @@ const insertDataContacts = (Name, Email, Phone) => {
     let checkName = false
     contacts.forEach(e => {
         if (e.Name == Name) {
-            checkName = true
+            return checkName = true
         }
     });
     if (checkName) {
-        console.log('<=== Nama sudah ada ===>');
-        return true
+        console.log('<=== Name already exists ===>');
+        return false
+    }
+
+    // VALIDATOR EMAIL & PHONE
+    if (!validation(Email, Phone)) {
+        return false
     }
 
     // INSERT DATA
     contacts.push(contact)
     fs.writeFileSync('./data/contacts.json', JSON.stringify(contacts))
 
-    console.log('<=== Thank you ===>');
+    const data = [{
+        'Name': Name,
+        'Email': Email,
+        'Phone': Phone
+    }]
+
+    data.forEach(e => {
+        console.log(e);
+    });
+    console.log('<=== Input success ===>');
 
 }
 

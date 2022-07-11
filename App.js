@@ -1,4 +1,4 @@
-const App = require('./Contact.js')
+const Contact = require('./Contact.js')
 const yargs = require('yargs')
 
 yargs.command({
@@ -22,7 +22,7 @@ yargs.command({
         }
     },
     handler(argv) {
-        App.insertDataContacts(argv.name, argv.mobile)
+        Contact.insertDataContacts(argv.name, argv.email, argv.mobile)
     }
 })
 
