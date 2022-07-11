@@ -68,6 +68,7 @@ const insertDataContacts = (Name, Email, Phone) => {
 
     // SUCCESS OUTPUT
     process.stdout.write('\033c');
+    console.log('<=== Input success ===>');
     const data = [{
         'Name': Name,
         'Email': Email,
@@ -77,7 +78,6 @@ const insertDataContacts = (Name, Email, Phone) => {
     data.forEach(e => {
         console.log(e);
     });
-    console.log('<=== Input success ===>');
 
 }
 
