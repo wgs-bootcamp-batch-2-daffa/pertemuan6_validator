@@ -1,13 +1,4 @@
 const fs = require('fs')
-
-const validator = require('validator')
-
-const readline = require('readline')
-
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-})
 // 
 // ASK QUESTION FUNCTION
 // 
@@ -32,22 +23,35 @@ const dataContactsValidator = () => {
     // VALIDATION FILE
     const dataPath = './data/contacts.json'
     if (!fs.existsSync(dataPath)) {
-        fs.writeFileSync(dataPath, '[]', 'utf8')
+        fs.writeFileSync(dataPath, '[]')
     }
 }
 // 
 // INSERT DATA CONTACTS
 // 
-const insertDataContacts = (Name, Phone) => {
+const insertDataContacts = (Name, Email, Phone) => {
     // VALIDATOR
     dataContactsValidator()
 
     // INSERT DATA
-    const contact = { Name, Phone }
+    const contact = { Name, Email, Phone }
     const file = fs.readFileSync('./data/contacts.json', 'utf8')
     const contacts = JSON.parse(file)
-    contacts.push(contact)
-    fs.writeFileSync('./data/contacts.json', JSON.stringify(contacts))
+
+    let checkName = false
+    contacts.forEach(e => {
+        if (e.Name == Name) {
+            return checkName = true
+        }
+    });
+    if (checkName == true) {
+        console.log('Nama sudah ada');
+    } else {
+        contacts.push(contact)
+        fs.writeFileSync('./data/contacts.json', JSON.stringify(contacts))
+
+        console.log('thank you');
+    }
 }
 module.exports = {
     askQuestion,
