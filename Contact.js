@@ -64,6 +64,7 @@ const insertDataContacts = (Name, Email, Phone) => {
     fs.writeFileSync('./data/contacts.json', JSON.stringify(contacts))
 
     // SUCCESS OUTPUT
+    process.stdout.write('\033c');
     const data = [{
         'Name': Name,
         'Email': Email,
